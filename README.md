@@ -3,7 +3,7 @@
 This repository hosts the 3D assets and web interface for my college research capstone project. It features an interactive, web-based 3D viewer that visualizes the architectural transition of the Old Sagay High School campus from the past to the present.
 
 ## 🚀 Live Demo
-**Experience the 3D viewer here:** [Interactive Campus Viewer](https://atlas395.github.io/3D-Assets/)
+**Experience the 3D viewer here:** [Interactive Campus Viewer](https://DMC-14.github.io/Virtual_Campus/)
 
 ## ✨ Features
 * **Web-Native Rendering:** Uses Google's `<model-viewer>` component to display 3D models directly in the browser without requiring external software.
