@@ -22,6 +22,7 @@
             flex-direction: column;
             overflow: hidden;
         }
+        
         /* The 3D Canvas viewport */
         model-viewer {
             width: 100%;
@@ -29,6 +30,7 @@
             background-color: #ffffff;
             --poster-color: transparent;
         }
+        
         /* Neat UI Overlay Panel */
         .ui-panel {
             position: absolute;
@@ -47,6 +49,7 @@
             justify-content: center;
             z-index: 10;
         }
+        
         button, select {
             padding: 10px 16px;
             border: none;
@@ -78,6 +81,111 @@
             height: 24px;
             background-color: #cfd8dc;
             margin: 0 4px;
+        }
+
+        /* Top Right Menu Button */
+        #menu-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(15, 15, 15, 0.85);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            z-index: 15;
+            backdrop-filter: blur(4px);
+        }
+        #menu-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* About Modal Overlay */
+        #about-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50; /* Below title card, above UI */
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+        
+        .modal-content {
+            background: #1a1a1a;
+            color: #aaaaaa;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            line-height: 1.6;
+        }
+        
+        .modal-content h2 {
+            color: #ffffff;
+            margin-top: 0;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-content h3 {
+            color: #ffffff;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        
+        .modal-content ul {
+            padding-left: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .modal-content li {
+            margin-bottom: 10px;
+        }
+        
+        .modal-content li strong {
+            color: #dddddd;
+        }
+        
+        .developer-credit {
+            font-size: 13px;
+            color: #888888;
+            font-style: italic;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            color: #aaaaaa;
+            font-size: 24px;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .close-btn:hover {
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
         }
 
         /* Loading Screen Overlay CSS */
@@ -132,13 +240,13 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #111111; /* Solid dark background */
+            background: #111111;
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            z-index: 99; /* Keeps it on top of everything */
+            z-index: 99;
             transition: opacity 0.8s ease, visibility 0.8s;
         }
         .title-content {
@@ -152,7 +260,7 @@
         }
         .title-content h2 {
             font-size: 14px;
-            color: #ff4444; /* Red accent */
+            color: #ff4444; 
             letter-spacing: 3px;
             margin: 0 0 25px 0;
         }
@@ -177,6 +285,8 @@
             background: white;
             color: #111111;
         }
+        
+        /* Utility class to hide overlays */
         .hidden {
             opacity: 0;
             visibility: hidden;
@@ -186,6 +296,7 @@
 </head>
 <body>
 
+    <!-- Introductory Title Card -->
     <div id="title-card">
         <div class="title-content">
             <h1>SUNN VIRTUAL CAMPUS</h1>
@@ -195,6 +306,30 @@
         </div>
     </div>
 
+    <!-- About Menu Modal -->
+    <div id="about-modal" class="hidden">
+        <div class="modal-content">
+            <button id="close-about-btn" class="close-btn">&times;</button>
+            <h2>Interactive 3D Campus Viewer 🏛️</h2>
+            <p>This repository hosts the 3D assets and web interface for my college research capstone project. It features an interactive, web-based 3D viewer designed for seamless architectural exploration and navigation of the SUNN campuses.</p>
+            
+            <h3>Features</h3>
+            <ul>
+                <li><strong>Interactive UI Navigation:</strong> A custom dropdown menu allows users to seamlessly switch between different campus structures.</li>
+                <li><strong>Architectural Exploration:</strong> Users can interact with distinct building meshes and navigate the environment to understand the spatial layout of the campus.</li>
+                <li><strong>Guided Camera Constraints:</strong> Locked ground-level and orbital camera constraints provide a smooth, collision-free walkthrough.</li>
+            </ul>
+            
+            <div class="developer-credit">
+                Developed by Daniel for capstone research presentation.
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Right Menu Button -->
+    <button id="menu-btn">☰ MENU</button>
+
+    <!-- Loading Overlay -->
     <div id="loadingOverlay">
         <div class="loading-box">
             <div class="spinner"></div>
@@ -202,6 +337,7 @@
         </div>
     </div>
 
+    <!-- 3D Viewer with HDRI and Camera Limits -->
     <model-viewer 
         id="buildingViewer"
         src="building.glb"
@@ -236,16 +372,38 @@
         const resetBtn = document.getElementById('resetCam');
         const modelSelector = document.getElementById('modelSelector');
         const loadingOverlay = document.getElementById('loadingOverlay');
+        
+        // Modal & Menu Variables
+        const menuBtn = document.getElementById('menu-btn');
+        const aboutModal = document.getElementById('about-modal');
+        const closeAboutBtn = document.getElementById('close-about-btn');
 
         // Hide Title Card on Click
         document.getElementById('enter-btn').addEventListener('click', () => {
             document.getElementById('title-card').classList.add('hidden');
         });
 
+        // Open About Modal
+        menuBtn.addEventListener('click', () => {
+            aboutModal.classList.remove('hidden');
+        });
+
+        // Close About Modal
+        closeAboutBtn.addEventListener('click', () => {
+            aboutModal.classList.add('hidden');
+        });
+
+        // Close About Modal if clicking outside the content box
+        aboutModal.addEventListener('click', (event) => {
+            if (event.target === aboutModal) {
+                aboutModal.classList.add('hidden');
+            }
+        });
+
         // Show the loading screen when a new model is selected
         modelSelector.addEventListener('change', (event) => {
-            loadingOverlay.classList.add('active'); // Make pop-up visible
-            viewer.src = event.target.value;        // Start loading new model
+            loadingOverlay.classList.add('active'); 
+            viewer.src = event.target.value;        
         });
 
         // Hide the loading screen exactly when the model finishes loading
