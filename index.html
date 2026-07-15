@@ -124,11 +124,77 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* Title Card Overlay */
+        #title-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #111111; /* Solid dark background */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 99; /* Keeps it on top of everything */
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .title-content {
+            max-width: 600px;
+            padding: 40px;
+        }
+        .title-content h1 {
+            font-size: 32px;
+            letter-spacing: 4px;
+            margin: 0 0 5px 0;
+        }
+        .title-content h2 {
+            font-size: 14px;
+            color: #ff4444; /* Red accent */
+            letter-spacing: 3px;
+            margin: 0 0 25px 0;
+        }
+        .title-content p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #aaaaaa;
+            margin-bottom: 40px;
+        }
+        #enter-btn {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 15px 40px;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #enter-btn:hover {
+            background: white;
+            color: #111111;
+        }
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Loading Overlay -->
+    <div id="title-card">
+        <div class="title-content">
+            <h1>SUNN VIRTUAL CAMPUS</h1>
+            <h2>INTERACTIVE 3D EXPLORER</h2>
+            <p>Experience an immersive architectural walkthrough of the campus grounds. Navigate between distinct facilities, explore pedestrian-level views, and interact with the 3D environment.</p>
+            <button id="enter-btn">START EXPLORING</button>
+        </div>
+    </div>
+
     <div id="loadingOverlay">
         <div class="loading-box">
             <div class="spinner"></div>
@@ -136,7 +202,6 @@
         </div>
     </div>
 
-    <!-- 3D Viewer with HDRI and Camera Limits -->
     <model-viewer 
         id="buildingViewer"
         src="building.glb"
@@ -172,6 +237,11 @@
         const modelSelector = document.getElementById('modelSelector');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
+        // Hide Title Card on Click
+        document.getElementById('enter-btn').addEventListener('click', () => {
+            document.getElementById('title-card').classList.add('hidden');
+        });
+
         // Show the loading screen when a new model is selected
         modelSelector.addEventListener('change', (event) => {
             loadingOverlay.classList.add('active'); // Make pop-up visible
@@ -192,6 +262,11 @@
                 viewer.setAttribute('auto-rotate', '');
                 rotateBtn.innerText = "Pause Rotation";
             }
+        });
+        
+        // Reset Camera
+        resetBtn.addEventListener('click', () => {
+            viewer.cameraOrbit = "0deg 85deg auto";
         });
     </script>
 </body>
