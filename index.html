@@ -344,7 +344,6 @@
     <model-viewer 
         id="buildingViewer"
         src="building.glb"
-        autoplay
         environment-image="HDRI_puresky_1k.hdr"
         skybox-image="HDRI_puresky_1k.hdr"
         camera-controls
@@ -354,7 +353,8 @@
         ar
         ar-modes="webxr scene-viewer quick-look"
         shadow-intensity="1.5"
-        shadow-softness="0.8">
+        shadow-softness="0.8"
+        alt="Interactive 3D view of the campus">
     </model-viewer>
 
     <div class="ui-panel">
@@ -422,29 +422,6 @@
             } else {
                 viewer.setAttribute('auto-rotate', '');
                 rotateBtn.innerText = "Pause Rotation";
-            }
-        });
-        // 1. Only change the file when the dropdown is clicked
-        modelSelector.addEventListener('change', (event) => {
-            loadingOverlay.classList.add('active'); // Show loading screen
-            viewer.src = event.target.value;        // Start downloading new model
-        });
-
-        // 2. Wait for the model to FULLY load before applying camera rules
-        viewer.addEventListener('load', () => {
-            loadingOverlay.classList.remove('active'); // Hide loading screen
-            
-            // SMART CAMERA LOGIC: Check if the loaded file name contains "Old_Sagay"
-            if (viewer.src.includes('Old_Sagay_Campus.glb')) {
-                // Lock the camera to the courtyard and strict zoom limits
-                viewer.cameraTarget = '0m 0m 0m'; 
-                viewer.cameraOrbit = '0deg 75deg 30m'; 
-                viewer.maxCameraOrbit = 'auto 90deg 50m'; 
-            } else {
-                // Unlock the camera for the Main Building
-                viewer.cameraTarget = 'auto auto auto';
-                viewer.cameraOrbit = '0deg 85deg auto';
-                viewer.maxCameraOrbit = 'auto 90deg auto';
             }
         });
         
